@@ -6,7 +6,6 @@ public class Entity : MonoBehaviour
 {
     public float maxHp =100f;
     public float currentHp;
-
     public Collider coll;
     public Rigidbody rigid;
     public bool stunned = false;
@@ -53,5 +52,11 @@ public class Entity : MonoBehaviour
        {
            currentHp -=1f;
        }
+        Debug.Log(this.name +  " Hit! Remaining HP: " + currentHp);
+        if(currentHp <= 0f)
+        {
+            Debug.Log(this.name + " is dead. RIP.");
+            Destroy(this.gameObject);
+        }
     }
 }
