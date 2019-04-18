@@ -7,53 +7,48 @@ public class PlayerMovement : MonoBehaviour
     
     public float walkSpeed = 10.0f;
     public float gravity = 9.8f;
-    //public float rotateSpeed =0.3f;
-    public float jumpSpeed =8.0f;
-    public Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection;
     public float aimDirection = 0f;
     public new Camera camera;
     public GameObject player;
-    public CharacterController controller;
+    public Rigidbody rigid;
     void Start()
     {
         player = transform.gameObject;
-        controller = GetComponent<CharacterController>();
         if(camera == null)
         {
             camera = Camera.main;
         }
-        moveDirection = new Vector3();
+        moveDirection = new Vector3(0f,0f,0f);
+        rigid = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         LeftStick();
         RightStick();
-        moveDirection.y = moveDirection.y - (gravity*Time.deltaTime);
-        controller.Move(moveDirection*Time.deltaTime);
+        
+        
         player.transform.eulerAngles = new Vector3(0,aimDirection,0);
 
 	}
+    void FixedUpdate() {
+        
+        if(moveDirection.sqrMagnitude >0)
+            rigid.velocity =moveDirection*Time.deltaTime;
+    }
     void LeftStick()
     {
-        float inputx = Input.GetAxis("Horizontal");
-        float inputy = Input.GetAxis("Vertical");
-        float inputMag = Mathf.Sqrt(Mathf.Pow(inputx,2f)+ Mathf.Pow(inputy, 2f));
+        float inputhoriz = Input.GetAxis("Horizontal");
+        float inputvert = Input.GetAxis("Vertical");
+        float inputMag = Mathf.Sqrt(Mathf.Pow(inputhoriz,2f)+ Mathf.Pow(inputvert, 2f));
         if(inputMag > 1)
         {
-        	inputx/=inputMag;
-        	inputy/=inputMag;
+        	inputhoriz/=inputMag;
+        	inputvert/=inputMag;
         }
-        moveDirection.x =inputx*walkSpeed;
-        moveDirection.z = inputy * walkSpeed;
-        if (controller.isGrounded)
-        {
-            if (Input.GetButtonDown("Jump"))
-            {
-                moveDirection.y = jumpSpeed;
-            }
-        }
-
+        moveDirection.x = inputhoriz*walkSpeed;
+        moveDirection.z = inputvert * walkSpeed;
     }
 
     void RightStick()
@@ -79,11 +74,11 @@ public class PlayerMovement : MonoBehaviour
     float InputToRotation(float x, float y)
     {
         float angle = 0f;
-        if (x != 0.0f || y != 0.0f)
-        {
+        //if (x != 0.0f || y != 0.0f)
+        //{
             angle = 90 - Mathf.Atan2(y, x) * Mathf.Rad2Deg;
 
-        }
+        //}
         return angle;
     }
 }
