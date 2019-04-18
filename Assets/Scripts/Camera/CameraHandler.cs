@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CameraHandler : MonoBehaviour
 {
-    [Range(50,120)]
-    public float fov = 90;
     Camera cam;
     public Vector3 offset;
     public Vector3 cameraAngle;
@@ -17,7 +15,6 @@ public class CameraHandler : MonoBehaviour
         if(cam==null)
             cam = Camera.main;
 
-        cam.fieldOfView = fov;
         cam.transform.eulerAngles = cameraAngle;
     }
 

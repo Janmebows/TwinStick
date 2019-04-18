@@ -6,12 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     
     public float walkSpeed = 10.0f;
-    public float gravity = 9.8f;
     public Vector3 moveDirection;
     public float aimDirection = 0f;
     public new Camera camera;
     public GameObject player;
+    public Weapon weapon;
     public Rigidbody rigid;
+    bool tryFireThisFrame = false;
     void Start()
     {
         player = transform.gameObject;
@@ -21,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
         }
         moveDirection = new Vector3(0f,0f,0f);
         rigid = GetComponent<Rigidbody>();
+        weapon = GetComponentInChildren<Weapon>();
+        weapon.autofire = false;
     }
 
     void Update()
@@ -36,6 +39,12 @@ public class PlayerMovement : MonoBehaviour
         
         if(moveDirection.sqrMagnitude >0)
             rigid.velocity =moveDirection*Time.deltaTime;
+        if(tryFireThisFrame)
+        {
+            weapon.FireBullet();
+            tryFireThisFrame = false;
+        }
+
     }
     void LeftStick()
     {
@@ -56,20 +65,21 @@ public class PlayerMovement : MonoBehaviour
         //
         //JOYSTICK CONTROLS
         //
-        //float inputx = Input.GetAxis("JOYRx");
-        //float inputy = Input.GetAxis("JOYRy");
-        //float threshold = 0.2f;
-        //if(inputx > threshold || inputx < -threshold ||inputy > threshold || inputy < -threshold )
-                //aimDirection = InputToRotation(inputx,inputy);
-
+        float inputx = Input.GetAxis("JOYRx");
+        float inputy = Input.GetAxis("JOYRy");
+        float threshold = 0.2f;
+        if(inputx > threshold || inputx < -threshold ||inputy > threshold || inputy < -threshold ){
+                aimDirection = InputToRotation(inputx,inputy);
+                tryFireThisFrame = true;
+        }
 
         //
         //MOUSE CONTROLS
         //
-        Vector3 inputMouse = Input.mousePosition;
-        float offsetx = Screen.width * 0.5f;
-        float offsetz = Screen.height * 0.5f;
-        aimDirection = InputToRotation(inputMouse.x -offsetx,inputMouse.y - offsetz);
+        //Vector3 inputMouse = Input.mousePosition;
+        //float offsetx = Screen.width * 0.5f;
+        //float offsetz = Screen.height * 0.5f;
+        //aimDirection = InputToRotation(inputMouse.x -offsetx,inputMouse.y - offsetz);
     }
     float InputToRotation(float x, float y)
     {
