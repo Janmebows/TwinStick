@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Weapon weapon;
     public Rigidbody rigid;
     bool tryFireThisFrame = false;
+    public Entity entityData;
     void Start()
     {
         player = transform.gameObject;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = new Vector3(0f,0f,0f);
         rigid = GetComponent<Rigidbody>();
         weapon = GetComponentInChildren<Weapon>();
+        entityData = GetComponent<Entity>();
         weapon.autofire = false;
     }
 
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
 	}
     void FixedUpdate() {
-        
+        if(!entityData.stunned){
         if(moveDirection.sqrMagnitude >0)
             rigid.velocity =moveDirection*Time.deltaTime;
         if(tryFireThisFrame)
@@ -44,10 +46,11 @@ public class PlayerMovement : MonoBehaviour
             weapon.FireBullet();
             tryFireThisFrame = false;
         }
-
+        }
     }
     void LeftStick()
     {
+        
         float inputhoriz = Input.GetAxis("Horizontal");
         float inputvert = Input.GetAxis("Vertical");
         float inputMag = Mathf.Sqrt(Mathf.Pow(inputhoriz,2f)+ Mathf.Pow(inputvert, 2f));
@@ -58,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         }
         moveDirection.x = inputhoriz*walkSpeed;
         moveDirection.z = inputvert * walkSpeed;
+    
     }
 
     void RightStick()
@@ -91,4 +95,5 @@ public class PlayerMovement : MonoBehaviour
         //}
         return angle;
     }
+
 }

@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviour
     public float fireTime;
     public Transform bulletSpawnPoint;
     public GameObject bullet;
+    public float damage;
     public float bulletForce;
     public float accuracy = 1f;
     public bool autofire = true;
