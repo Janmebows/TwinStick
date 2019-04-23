@@ -54,3 +54,9 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+Assets/Resources\.meta
+
+Assets/Scripts/Controls\.meta
+
+ProjectSettings/ProjectVersion\.txt
