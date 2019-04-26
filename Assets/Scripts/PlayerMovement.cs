@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rigid;
     bool tryFireThisFrame = false;
     public Entity entityData;
+    public bool useMouseControls = false;
     void Start()
     {
         player = transform.gameObject;
@@ -71,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         //
         //JOYSTICK CONTROLS
         //
+        if(!useMouseControls){
         float inputx = Input.GetAxis("JOYRx");
         float inputy = Input.GetAxis("JOYRy");
         float threshold = 0.2f;
@@ -79,10 +81,11 @@ public class PlayerMovement : MonoBehaviour
             aimDirection = InputToRotation(inputx, inputy);
             tryFireThisFrame = true;
         }
-
+        }
         //
         //MOUSE CONTROLS
         //
+        if(useMouseControls){
         Vector3 inputMouse = Input.mousePosition;
         float offsetx = Screen.width * 0.5f;
         float offsetz = Screen.height * 0.5f;
@@ -90,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             tryFireThisFrame = true;
+        }
         }
         float InputToRotation(float x, float y)
         {

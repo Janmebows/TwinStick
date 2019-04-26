@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
  
     float time =0;
 
-    public float fireTime;
+    public float fireRate;
     public Transform bulletSpawnPoint;
     public GameObject bullet;
     public float damage;
@@ -33,9 +33,9 @@ public class Weapon : MonoBehaviour
     //can have various different types of the firebullet method.
     public void FireBullet()
     {
-        if(Time.time > time+fireTime){
+        if(Time.time > time+1/fireRate){
             
-            time=Time.time + fireTime;
+            time=Time.time + 1/fireRate;
         GameObject bull = Instantiate(bullet,bulletSpawnPoint.position,bulletSpawnPoint.rotation);
         Rigidbody brigid = bull.GetComponent<Rigidbody>();
         Collider bcoll = bull.GetComponent<Collider>();
