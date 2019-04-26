@@ -106,6 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2bf5db8a6dd1ee6ad6e648d81cfbbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle: {fileID: 7550765019892366295, guid: cb5aeb36e4396384ca612d53b3e9568c,
+    type: 3}
   maxHp: 100
   currentHp: 0
   coll: {fileID: 0}
@@ -204,6 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
+  ownerRigid: {fileID: 0}
   fireRate: 25
   bulletSpawnPoint: {fileID: 839218914}
   bullet: {fileID: 5581823593665903899, guid: 62e5ef54cb4745cb5b93092a4931f581, type: 3}

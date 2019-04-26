@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    public ParticleSystem particle;
     public float maxHp =100f;
     public float currentHp;
     public Collider coll;
@@ -29,13 +30,14 @@ public class Entity : MonoBehaviour
     IEnumerator Stun(){
         if(alreadyStunned)
             yield return null;
-        else{
+        else
+        {
             alreadyStunned = true;
-        yield return new WaitForSeconds(stuntime);
-        stunned =false;
-        alreadyStunned = false;
-        yield return null;
-    }
+            yield return new WaitForSeconds(stuntime);
+            stunned =false;
+            alreadyStunned = false;
+            yield return null;
+        }
     }
        private void OnCollisionEnter(Collision other) {
        if(other.gameObject.tag=="Projectile")
@@ -47,16 +49,30 @@ public class Entity : MonoBehaviour
 
         Debug.Log("Stunned!");
         stunned = true;
+        Destroy(other.gameObject);
+        Debug.Log(this.name +  " Hit! Remaining HP: " + currentHp);
        }
        else if(other.gameObject.tag=="Enemy")
        {
            currentHp -=1f;
-       }
         Debug.Log(this.name +  " Hit! Remaining HP: " + currentHp);
+       }
         if(currentHp <= 0f)
         {
+            if(this.tag=="Player")
+            {
+                //Something something game over
+            }
+            else
+                Dying();
+        }
+    }
+
+    void Dying(){
+        particle = Instantiate(particle,this.transform.position,this.transform.rotation);
+        EnemySpawning.enemies.Remove(this.gameObject);
             Debug.Log(this.name + " is dead. RIP.");
             Destroy(this.gameObject);
-        }
+            Destroy(particle.gameObject,particle.main.duration*3f);
     }
 }

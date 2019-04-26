@@ -95,7 +95,9 @@ public class PlayerMovement : MonoBehaviour
             tryFireThisFrame = true;
         }
         }
-        float InputToRotation(float x, float y)
+
+    }
+    float InputToRotation(float x, float y)
         {
             float angle = 0f;
             //if (x != 0.0f || y != 0.0f)
@@ -106,5 +108,4 @@ public class PlayerMovement : MonoBehaviour
             return angle;
         }
 
-    }
 }

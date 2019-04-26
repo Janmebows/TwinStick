@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class EnemySpawning : MonoBehaviour
 {
-    public List<GameObject> playerObjects;
-    public List<GameObject> enemies;
+    static EnemySpawning enemySpawning;
+    static public List<GameObject> playerObjects;
+    static public List<GameObject> enemies;
     public Vector3[] spawnPoints;
     public GameObject enemyPrefab;
     public GameObject enemyHolder;
@@ -17,6 +18,11 @@ public class EnemySpawning : MonoBehaviour
     int enemyID = 1;
 
 void Awake(){
+    if(enemySpawning==null)
+        enemySpawning=this;
+    if(enemySpawning !=this)
+        Destroy(this);
+        
     if(enemyHolder == null){
         enemyHolder = new GameObject("Enemy holder");
     }
@@ -49,9 +55,6 @@ void Awake(){
     // Update is called once per frame
     void Update()
     {
-        if(enemies.Count<maxEnemies){
-
-        }
     }
 
 

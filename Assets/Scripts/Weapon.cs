@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public GameObject owner;
+    public Rigidbody ownerRigid;
  
     float time =0;
 
@@ -43,6 +44,7 @@ public class Weapon : MonoBehaviour
             Physics.IgnoreCollision(owner.GetComponent<Collider>(),bcoll,true);
         //brigid.AddRelativeForce(bulletForce*bulletSpawnPoint.forward);
         brigid.AddForce(bulletForce*bulletSpawnPoint.forward);
+        brigid.velocity+=owner.GetComponent<Rigidbody>().velocity;
         Destroy(bull,3f);
         }
     }
